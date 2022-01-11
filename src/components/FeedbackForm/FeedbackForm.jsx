@@ -15,10 +15,10 @@ function FeedbackForm() {
   const { addFeedback, feedbackEdit, updateFeedback } = useContext(FeedbackContext)
 
   const handleTextChange = (e) => {
-    if (text.trim().length >= 10) {
+    if (e.target.value.trim().length >= 10) {
       setBtnDisabled(false)
       setMessage(null)
-    } else if (text.trim().length < 10) {
+    } else if (e.target.value.trim().length < 10) {
       setMessage('The text must have at least 10 characteres!')
     }
 
