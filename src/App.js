@@ -8,6 +8,7 @@ import FeedbackList from './components/FeedbackList/FeedbackList';
 import FeedbackForm from './components/FeedbackForm/FeedbackForm';
 import FeedbackStats from './components/FeedbackStats/FeedbackStats';
 import AboutIconLink from './components/AboutIconLink/AboutIconLink';
+import { FeedbackProvider } from './context/FeedbackContext/Feedback';
 
 import FeedbackData from './mock-data/data';
 
@@ -26,20 +27,22 @@ function App() {
   }
 
   return (
-    <Router>
-      <Header/>
-      <div className='container'>
-        <Route exact path='/'>
-          <FeedbackForm handleAdd={addFeedback}/>
-          <FeedbackStats feedbackList={feedbackList} />
-          <FeedbackList feedbacksList={feedbackList} handleDelete={deleteFeedback} />
-        </Route>
+    <FeedbackProvider>
+      <Router>
+        <Header/>
+        <div className='container'>
+          <Route exact path='/'>
+            <FeedbackForm handleAdd={addFeedback}/>
+            <FeedbackStats feedbackList={feedbackList} />
+            <FeedbackList feedbacksList={feedbackList} handleDelete={deleteFeedback} />
+          </Route>
 
-        <Route path='/about' component={AboutPage} />
-        
-        <AboutIconLink />
-      </div>
-    </Router>
+          <Route path='/about' component={AboutPage} />
+          
+          <AboutIconLink />
+        </div>
+      </Router>
+    </FeedbackProvider>
   );
 }
 
