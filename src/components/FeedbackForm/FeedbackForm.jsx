@@ -15,15 +15,11 @@ function FeedbackForm() {
   const { addFeedback, feedbackEdit, updateFeedback } = useContext(FeedbackContext)
 
   const handleTextChange = (e) => {
-    if (text === '') {
-      setBtnDisabled(true)
-      setMessage(null)
-    } else if (text !== '' && text.trim().length < 10) {
-      setBtnDisabled(true)
-      setMessage(null)
-    } else {
+    if (text.trim().length >= 10) {
       setBtnDisabled(false)
-      setBtnDisabled(null)
+      setMessage(null)
+    } else if (text.trim().length < 10) {
+      setMessage('The text must have at least 10 characteres!')
     }
 
     setText(e.target.value)
@@ -47,11 +43,19 @@ function FeedbackForm() {
 
       if (feedbackEdit.edit === true) {
         updateFeedback(feedbackEdit.item.id, newFeedback)
+        setText('')
+        setBtnDisabled(true)
+        setRating(10)
       } else {
         addFeedback(newFeedback)
+        setText('')
+        setBtnDisabled(true)
+        setRating(10)
       }
 
       setText('')
+      setBtnDisabled(true)
+      setRating(10)
     }
   }
 
@@ -59,7 +63,7 @@ function FeedbackForm() {
     <Card>
       <form onSubmit={handleSubmit}>
         <h2>How would you rate us?</h2>
-        <RatingSelect select={(rating) => setRating(rating)} />
+        <RatingSelect select={setRating} selected={rating} />
         <div className='input-group'>
           <input
             onChange={handleTextChange}
